@@ -1,13 +1,14 @@
 {
   "name": "tech-note",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "tech note MERN project",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server",
+     "dev": "nodemon server"
   },
   "keywords": [],
-  "author": "",
+  "author": "LollyTech",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
