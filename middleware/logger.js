@@ -27,4 +27,4 @@ const logger = (req, res, next) => {
   next();
 };
 
-// module.exports = { logEvents, logger };
+module.exports = { logEvents, logger };
