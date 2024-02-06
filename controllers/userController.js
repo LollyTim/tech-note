@@ -71,6 +71,24 @@ const updateUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
+
+  const duplicate = await User.findOne({ username }).lean().exec();
+  // Allow update top the original user
+  if (duplicate && duplicate?._id.toString() !== id) {
+    return res.status(409).json({ message: "dulicate username" });
+  }
+
+  user.username = username;
+  user.roles = roles;
+  user.active = active;
+
+  if (password) {
+    // Hash password
+    user.password = await bcrypt.hash(password, 10);
+  }
+
+  const updatedUser = await user.save();
+  res.json({ message: `${updatedUser.username} updated` });
 });
 
 // @desc delete a users
