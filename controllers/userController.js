@@ -77,7 +77,7 @@ const updateUser = asyncHandler(async (req, res) => {
   const duplicate = await User.findOne({ username }).lean().exec();
   // Allow update top the original user
   if (duplicate && duplicate?._id.toString() !== id) {
-    return res.status(409).json({ message: "dulicate username" });
+    return res.status(409).json({ message: `user name already taken ` });
   }
 
   user.username = username;
@@ -90,7 +90,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   const updatedUser = await user.save();
-  res.json({ message: `${updatedUser.username} updated` });
+  res.json({ message: ` Username -> ${updatedUser.username} updated` });
 });
 
 // @desc delete a users
@@ -104,8 +104,8 @@ const deleteUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "User ID Required " });
   }
 
-  const notes = await Note.findOne({ user: id }).lean().exec();
-  if (note?.length) {
+  const note = await Note.findOne({ user: id }).lean().exec();
+  if (note) {
     return res.status(400).json({ message: "User has an assigned" });
   }
 
