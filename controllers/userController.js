@@ -95,7 +95,24 @@ const updateUser = asyncHandler(async (req, res) => {
 // @route delete /users
 // @access Private
 
-const deleteUser = asyncHandler(async (req, res) => {});
+const deleteUser = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+
+  if (!data) {
+    return res.status(400).json({ message: "User ID Required " });
+  }
+
+  const notes = await Note.findOne({ user: id }).lean().exec();
+  if (note?.length) {
+    return res.status(400).json({ message: "User has an assigned" });
+  }
+
+  const user = await User.findOne(id).exec();
+
+  if (!user) {
+    return res.status(400).json({ message: "User not found" });
+  }
+});
 
 module.exports = {
   getAllUser,
