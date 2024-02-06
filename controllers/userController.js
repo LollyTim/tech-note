@@ -39,9 +39,11 @@ const createNewUser = asyncHandler(async (req, res) => {
   const hashedPwd = await bcrypt.hash(password, 10); // salt rounds
   const userObject = { username, password: hashedPwd, roles };
 
+  //   create and store new user
   const user = await User.create(userObject);
 
   if (user) {
+    //created
     res.status(201).json({ message: `New user ${username} created` });
   } else {
     res.status(400).json({ message: "invalid user data recieved" });
