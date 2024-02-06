@@ -9,6 +9,7 @@ const path = require("path");
 const connnectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
 const { logger, logEvents } = require("./middleware/logger");
+const { ppid } = require("process");
 const PORT = process.env.PORT || 3500;
 
 console.log(process.env.NODE_ENV);
@@ -26,6 +27,9 @@ app.use(cookieParser());
 app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routes/root"));
+
+app.use("/users", require("./routes/userRoutes"));
+
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("html")) {
